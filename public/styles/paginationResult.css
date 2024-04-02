@@ -1,0 +1,57 @@
+.pagination {
+    margin: 50px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .pagination > span {
+    padding: 5px;
+    background-color: #a8efef;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10%;
+    cursor: pointer;
+    transition-duration: 300ms;
+  }
+  .pagination > span:hover {
+    scale: 1.2;
+  }
+  
+  .pagination > span:nth-child(even) {
+    background-color: rgb(38, 61, 211);
+  }
+  
+  .pagination > span:nth-child(3) {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .disable {
+    opacity: 0.4;
+    cursor: default;
+  }
+  
+  .disable:hover {
+    scale: 1 !important;
+  }
+  
+  .cursor-pointer{
+    cursor: pointer;
+  }
+  
+  .body{
+    background-color: rgb(211, 165, 253);
+    
+  }
+
+  .font{
+font-size: xx-large;
+color: #009090;
+text-align: center;
+  }
+
+ 

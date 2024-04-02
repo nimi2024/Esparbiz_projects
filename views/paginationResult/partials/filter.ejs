@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>filter</title>
+</head>
+
+<body>
+    <div class="filter h-[10rem] flex items-center justify-center gap-5">
+        <div>
+            <label for="month" class="py-2 px-5">Filter By Month:</label>
+            <select name="month" id="month" class="py-2 px-5 rounded-lg cursor-pointer">
+                <option value="12">December</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+            </select>
+        </div>
+        <div>
+            <label for="year" class="py-2 px-5 ">Filter By Year:</label>
+            <select name="year" id="year" class="py-2 px-5 rounded-lg cursor-pointe">
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+            </select>
+        </div>
+        <button id="filter_button" class="py-1 px-5 border bg-[#00ffff] rounded-lg outline-none ">Filter </button>
+    </div>
+</body>
+<script>
+    let month_selector = document.getElementById("month");
+    let year_selector = document.getElementById("year");
+    let month = localStorage.getItem("month") ? localStorage.getItem("month") : month_selector.value;
+    let year = localStorage.getItem("year") ? localStorage.getItem("year") : year_selector.value;
+    let filter_button = document.getElementById("filter_button");
+
+    month_selector.value = month;
+    year_selector.value = year;
+
+  
+
+    const getfilterValue = () => {
+        localStorage.setItem("page-value", 1);
+        localStorage.setItem("month", month_selector.value);
+        localStorage.setItem("year", year_selector.value);
+        window.location.href = `/?month_year=${month_selector.value}_${year_selector.value}`
+       
+    }
+
+    filter_button.addEventListener("click", () => getfilterValue());
+
+
+</script>
+
+</html>

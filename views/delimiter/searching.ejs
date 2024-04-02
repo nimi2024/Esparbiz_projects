@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .bn1{
+            margin-bottom: 20px;
+            background-color: #089a19;
+            border-radius: 10px;
+            width: 40px;
+            height: 30px;
+            /* align-items: center; */
+            border-color: #16a902   ;
+        
+        }
+        .bn1:hover{
+            background-color: hsl(149, 100%, 41%);
+        }
+      
+        h2{
+            text-align: center;
+        }
+        /* form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        } */
+        /* #toggle{
+           display: none;
+           margin: auto;
+
+        } */
+        form{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        #delimiter{
+            max-width: 140px;
+            display: flex;
+            gap:30px;
+            flex-direction: column;
+           justify-content: center;
+           align-items: center;
+            background-color: rgb(85, 228, 121);
+        }
+
+        #S_Id{
+            height: 30px;
+            border: #089a19 2px solid;
+            outline: none;
+            border-radius: 10px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+
+        .btn{
+            height: 30px;
+            width: 70px;
+            outline: none;
+            border: rgb(14, 98, 3) 2px solid;
+            background-color: #00ad14;
+            border-radius: 5px;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+       
+    </style>
+</head>
+<body>
+    <div style="margin:auto">
+    <h4>Nimi Mishra</h4>
+    
+</div>
+
+    <table id = "delimiter" border="1" cellpadding="5" style="border-collapse: collapse;">
+        <tr>
+            <td>Name</td>
+            <td>_</td>
+        </tr>
+        <tr>
+            <td>Surname</td>
+            <td>^</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>$</td>
+        </tr>
+        <tr>
+            <td>Phone No</td>
+            <td>}</td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>{</td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td>:</td>
+        </tr>
+    </table>
+
+
+
+  
+        <!-- <p>No. of records : <input type="text" id="val"></p> -->
+    </div>
+
+    <form action="/searching" method="post">
+        <input type="text" name="str" id="S_Id" tabindex="1"  size="80" value="<%= str %>" autofocus>
+        <input type="submit" tabindex="2" value="Go" class="btn"> 
+    </form>
+
+   
+<center><table border="1" cellpadding="5" style="border-collapse: collapse;">
+        <tr style="background-color: rgb(0, 184, 15);">
+            <!-- <th></th> -->
+            <th>
+                <div class="btn1">
+                    Student Id 
+                    
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    Name
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    Surname
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    Age
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    Phone No
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    Date Of Birth
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    Gender
+                </div>
+            </th>
+            <th>
+                <div class="btn1">
+                    City
+                </div>
+            </th>
+        </tr>
+        <% for(let i = 0;i < student.length; i++){%>
+            <tr>              
+                <td><%= student[i].student_Id %></td>
+                <td><%= student[i].firstName %></td>
+                <td><%= student[i].lastName %></td>
+                <td><%= student[i].age %></td>
+                <td><%= student[i].contactNo %></td>
+                <td><%= student[i].birthdate %></td>
+                <td><%= student[i].gender %></td>
+                <td><%= student[i].city %></td>
+            </tr>        
+        <%}%>
+    </table>
+</center>
+<div style="display: flex; justify-content: center; gap: 20px; align-items: center; text-align: center;">
+    <button id="firstpage" class="bn1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAr0lEQVRIS+2TgQmAMAwE7QZuoiPoRDqCTqYj6CaOYAINtDU0obWgUCEIT/vXfIhpCn+msH9TAWLCn4qohedOUKvzbE7zutJ2gEYbVG8BC/w57RGZBuAaneAwWBcCknZxA5EAWeYIjAGyzWOAV8wlwA4HOqgDarT5hhqbuzsLKaJsiGbIWRAJgN3iPJIhGkAIwU2mRSMwaUmLRpewk9maxzQPou2AW1KVVgFiTP+P6AbI6TQZhNzMlAAAAABJRU5ErkJggg=="/></button>
+    <button id="previouspage" class="bn1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAnElEQVRIS+2T0Q2AIAxEYQM30RF0Ih1BJ9MRdBNH8JpoQvjptULihyT3RXOvPWgMlU+s7B9+gJrwJyNq0PYILWr7KLBOIOYr1N2AWYNYAKn5AeMeOksBXOYCZyZwmzOAV+YsYENhC+3QwOSevgsbkRvCAKQhicoFYQFuiAWQQ2STiy7a83YS18SYM79IW1T13hqRapgX/AA1suoRXYjsHhmBZNpoAAAAAElFTkSuQmCC"/></button>
+    <button id="curpage" class="bn1"><%= page %></button>
+    <button id="nextpage" class="bn1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAkElEQVRIS2NkoDFgpLH5DKMWEAzhQRVEAUDnHgDiDwSdjaSAWB+ADF8PxBeA2JEUS4i1QADqen1SLSHWApCnybKEFAvIsoRUC0i2hFwL9gNtMgDii0DsgC/SSbUAFA9EGw7yLikWkGw4KRaQZTgpFsAyGsEwR8/lpAQRTYsKUoofFLWk+IAsS0YtIBhsNA8iACj+IhkevsLkAAAAAElFTkSuQmCC"/></button>
+    <button id="lastpage" class="bn1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAsUlEQVRIS2NkoDFgpLH5DKMWEAzhAQ2iBqDzJgDxByRnYhPD6wtcPggA6loPxBeA2BFqCTYxsoNIAKjzABDrI1kCMgxdDNl3WC3DFwdUsYRQJFNsCSELQN6myBJiLdgPtMgAiC8CsQM0sNHFsMYHIQtArifbcJBDCEUyRYbjs4Bil8PSLC4fJAAVzEcKc1D4YhMjO6OBNDYAMc2KCoIuI1YBoVRErDk41Y1aQDAIaR5EAByrPBl28Rs7AAAAAElFTkSuQmCC"/></button>
+
+
+    
+<!-- </center> -->
+<script >
+    let total_rec = 50000;
+let limit = JSON.parse('<%= limit %>');
+let pages = total_rec / limit;
+// let value = localStorage.getItem("page") ? localStorage.getItem("page") : 1;
+let value = '<%= page %>';
+
+let prev = document.getElementById("previouspage");
+let next = document.getElementById("nextpage");
+let first = document.getElementById("firstpage");
+let last = document.getElementById("lastpage");
+let curpage = document.getElementById("curpage");
+curpage.innerText = value;
+
+
+if(value == 1){
+    prev.style.opacity = "0.5";
+    prev.disabled = true;
+    first.style.opacity = "0.5";
+    first.disabled = true;
+}
+
+if(value == pages){
+    next.style.opacity = "0.5";
+    next.disabled = true;
+    last.style.opacity = "0.5";
+    last.disabled = true;
+}
+const pre = () =>{
+    if(value > 1  && value <= pages){
+        console.log("Previous page");
+        localStorage.setItem("page", --value);
+        let url = value;
+        // loadUrl(url);
+        append_parameter("page",url);
+        return value;
+    }
+
+}
+
+const nex = () =>{
+    if(value>=1 && value < pages){
+        console.log("Next Page");
+        localStorage.setItem("page", ++value);
+        let url = value;
+        // loadUrl(url);
+        append_parameter("page",url);
+        return value;
+    }
+
+}
+
+
+const firstpg = ()=> {
+    console.log("starting page");
+    value = 1;
+    localStorage.setItem("page" ,value);
+    let url = value;
+    // loadUrl(url);
+    append_parameter("page",url);
+    return value;
+}
+
+const lastpg = ()=> {
+    console.log("last page");
+    value = pages;
+    localStorage.setItem("page" ,value);
+    let url = value;
+    // loadUrl(url);
+    append_parameter("page",url);
+    return value;
+
+}
+
+
+
+// const loadUrl = (url) =>{
+//     window.location.href="/student_list?page="+url;
+// }
+
+function asc(value){
+    window.location.href=`/student_list?obf=${value}&ord=asc`;
+    // append_parameter("obf",value);
+    // append_parameter("ord","asc");
+}
+
+function desc(value){
+    window.location.href=`/student_list?obf=${value}&order=desc`;
+    // append_parameter("obf",value);
+    // append_parameter("ord","desc");
+}
+
+const append_parameter = (name,value) =>{
+    let params = new URLSearchParams(window.location.search);   
+    params.set(name,value);
+    window.location.search = params.toString();
+    console.log(params);
+}
+
+const remove_parameter = (name,value) =>{
+    let params = new URLSearchParams(window.location.search);   
+    params.delete(name);
+
+}
+
+// let toggled = document.getElementById("toggle");
+// let toggle = false
+// function fun(){
+//     console.log("funtion....");
+    
+//     if(!toggle){
+//         toggle = true;
+//         toggled.style.display = "flex";
+//         toggled.style.gap = "10px";
+//     }
+//     else{
+//         toggle = false;
+//         toggled.style.display = "none";
+//     }
+// }
+
+prev.addEventListener("click",pre);
+
+next.addEventListener("click",nex);
+
+first.addEventListener("click",firstpg);
+
+last.addEventListener("click", lastpg);
+
+</script>
+</body>
+</html>

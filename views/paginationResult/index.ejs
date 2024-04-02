@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles/paginationResult.css">
+
+</head>
+
+<body class="body">
+    <body> <h1 class="font">Nimmi Mishra</h1></body>
+    <div class="header h-[5rem] flex items-center justify-center"></div>
+    <div class="_table w-full flex items-center justify-center">
+        <table class="table-auto inline">
+            <thead class="w-full">
+                <tr class="flex">
+                    <% for(let i=0; i<table_title.length; i++) {%>
+                        <th class="border capitalize text-center py-2 px-5 flex items-center !w-[145px] gap-5">
+                            <%= table_title[i] %>
+                        </th>
+                        <% }; %>
+                        <th class="border capitalize text-center py-2 px-5 flex items-center !w-[145px] gap-5">Get Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<records.length; i++) {%>
+                    <tr>
+                        <% for(let j=0; j<table_keys.length; j++) {%>
+                            <td class="border text-center py-2 px-5  inline-block w-[141.5px]">
+                                <%= records[i][table_keys[j]] %>
+                            </td>
+                            <% }; %>
+                            <td class="border text-center py-2 px-5  inline-block w-[141.5px] cursor-pointer bg-blue-400 text-md duration-300 hover:text-white hover:bg-blue-400"><a href="/student/<%= records[i].student_id %>">Get Result</a></td>
+                    </tr>
+                    <% }; %>
+                    
+            </tbody>
+        </table>
+    </div>
+    <div class="h-[10rem] flex items-center justify-center">
+        <%- include('partials/pagination'); %>
+    </div>
+
+</body>
+
+</html>

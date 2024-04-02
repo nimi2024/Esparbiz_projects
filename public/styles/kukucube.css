@@ -1,0 +1,22 @@
+ body {
+     background-color: rgb(214, 214, 214);
+     margin: auto;
+     max-width: 1000px;
+     max-height: 500px;
+
+
+ }
+
+ #t1 {
+     background-color: rgb(0, 0, 0);
+     width: 320px;
+     height: 320px;
+     margin: auto;
+     border-radius: 5%;
+     box-shadow: rgba(84, 84, 84, 0.4) -5px 5px, rgba(75, 75, 75, 0.3) -10px 10px, rgba(48, 48, 48, 0.2) -15px 15px, rgba(40, 40, 40, 0.1) -20px 20px, rgba(20, 20, 20, 0.05) -25px 25px;
+ }
+
+ #target {
+
+     opacity: 30%;
+ }

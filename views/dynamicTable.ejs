@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/styles/dynamictable.css">
+    <title>
+        Dynamic Table
+    </title>
+</head>
+
+<body>
+    <section>
+    <form>
+        <center>
+            <label> First Name: Nimmi Mishra</label>
+            <br>
+            <label>date: 1/2/2024</label>
+            <br>
+            <label> Employee: ID24DEV016</label>
+        </center>
+    </form>
+    <div class="col2">
+        <div>
+        <button value="-" id="coladd" class="btn" onclick="ColAdd()"> +</button>
+    </div>
+    <div>
+        <button class="btn" id="colsub" value="-"  onclick="ColSub()"> -</button>
+    </div>
+    <div style="margin: auto;"></div>
+
+    <table border="1" id="dtab" ">
+        <tr id="row">
+            <td class="dark"> </td>
+            <td class="light"> </td>
+            <td class="dark"> </td>
+        </tr>
+        <tr id="row2">
+            <td class="light"> </td>
+            <td class="dark"> </td>
+            <td class="light"> </td>
+        </tr>
+        <tr id="row3">
+            <td class="dark"> </td>
+            <td class="light"> </td>
+            <td class="dark"> </td>
+        </tr>
+    </table>
+    <br>
+    <div class="col1">
+        <div>
+        <button class="btn" type="button" id="rowadd" value="+" onclick="rowADD()">+</button>
+    </div>&nbsp;&nbsp;
+    <div>
+        <button class="btn" value="-" id="rowsub"  onclick="document.getElementById('dtab').deleteRow(1)"> -</button>
+    </div>
+
+</section>
+</body>
+<script src="javascript/dynamictbl.js"></script>
+
+</html>

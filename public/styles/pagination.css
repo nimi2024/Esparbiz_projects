@@ -1,0 +1,54 @@
+.pagination {
+    margin: 50px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .pagination > span {
+    padding: 5px;
+    /* background-color: #057878; */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20%;
+    border:2px black solid;
+    cursor: pointer;
+    transition-duration: 300ms;
+  }
+  .pagination > span:hover {
+    scale: 1.2;
+  }
+  
+  .pagination > span:nth-child(even) {
+    font: 100;
+    /* background-color: rgb(94, 154, 182); */
+  }
+  
+  .pagination > span:nth-child(3) {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .disable {
+    opacity: 0.4;
+    cursor: default;
+  }
+  
+  .disable:hover {
+    scale: 1 !important;
+  }
+  
+  .cursor-pointer{
+    cursor: pointer;
+  }
+  .header{
+    font-size: xx-large;
+    color: rgb(0, 0, 0);
+
+  }
+  body{
+    background-color: rgb(198, 255, 214);
+  }

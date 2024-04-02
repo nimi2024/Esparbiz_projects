@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/pagination.css">
+    <title>Pagination</title>
+</head>
+
+<body>
+    <div class="pagination flex-center">
+        <span id="double_prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="m12.707 7.707-1.414-1.414L5.586 12l5.707 5.707 1.414-1.414L8.414 12z"></path>
+                <path d="M16.293 6.293 10.586 12l5.707 5.707 1.414-1.414L13.414 12l4.293-4.293z"></path>
+            </svg></span>
+        <span id="prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
+            </svg></span>
+        <span id="count">1</span>
+        <span id="next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
+            </svg></span>
+        <span id="double_next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10.296 7.71 14.621 12l-4.325 4.29 1.408 1.42L17.461 12l-5.757-5.71z"></path>
+                <path d="M6.704 6.29 5.296 7.71 9.621 12l-4.325 4.29 1.408 1.42L12.461 12z"></path>
+            </svg></span>
+    </div>
+</body>
+<script>
+    let total_records = JSON.parse("<%= n %>");
+    let particular_records = JSON.parse("<%= limit %>");
+    // let pages = parseInt(total_records / particular_records);
+    let pages=Math.ceil(total_records / particular_records);
+    // console.log(pages);
+    let initial_value = 1;
+    let value = localStorage.getItem("page-value") ? localStorage.getItem("page-value") : 1;
+
+    //buttons
+    let prev = document.getElementById("prev");
+    let next = document.getElementById("next");
+    let double_prev = document.getElementById("double_prev");
+    let double_next = document.getElementById("double_next");
+    let count = document.getElementById("count");
+
+
+
+    //update when page is refresing
+    count.innerText = value;
+
+
+
+    //for urls 
+    const host = `http://localhost:3000/?`;
+
+    //condition for disable button 
+
+    if (value === "1") {
+        prev.classList.add("disable");
+        double_prev.classList.add("disable");
+    }
+    if (value === `${pages}`) {
+        next.classList.add("disable");
+        double_next.classList.add("disable");
+    }
+
+
+    const addUrlParameter = (name, value) => {
+        let searchParams = new URLSearchParams(window.location.search)
+        searchParams.set(name, value)
+        window.location.search = searchParams.toString();
+        // console.log(searchParams);
+    }
+
+    const removeurlParameter = (value) => {
+        let searchParams = new URLSearchParams(window.location.search);
+        searchParams.delete(value);
+        window.location.search = searchParams.toString();
+    }
+
+
+    const nextPage = () => {
+        console.log("next click");
+        if (value > 0 && value < pages) {
+            localStorage.setItem("page-value", ++value);
+            addUrlParameter("p", value);
+            // let newUrl = `${host}p=${value}`;
+            // window.location.href = newUrl;
+            return value;
+        }
+    }
+
+    const prevPage = () => {
+        console.log("prev click");
+        if (value <= pages && value > 1) {
+            localStorage.setItem("page-value", --value);
+            addUrlParameter("p", value);
+            // let newUrl = `${host}p=${value}`;
+            // window.location.href = newUrl;
+            return value;
+        }
+    }
+
+    const startingPage = () => {
+        console.log("starting page");
+        if (value <= pages && value > 1) {
+            //reset value of page
+            value = 1;
+            localStorage.setItem("page-value", value);
+            addUrlParameter("p", value);
+            // let newUrl = `${host}p=${value}`;
+            // window.location.href = newUrl;
+            return value;
+        }
+    }
+
+    const endingPage = () => {
+        console.log("ending page");
+        if (value > 0 && value < pages) {
+            value = pages;
+            localStorage.setItem("page-value", value);
+            addUrlParameter("p", value);
+            // let newUrl = `${host}p=${value}`;
+            // window.location.href = newUrl;
+            return value;
+        }
+    }
+
+    // event handling
+
+    prev.addEventListener("click", () => prevPage());
+    next.addEventListener("click", () => nextPage());
+    double_prev.addEventListener("click", () => startingPage());
+    double_next.addEventListener("click", () => endingPage());
+
+</script>
+
+</html>

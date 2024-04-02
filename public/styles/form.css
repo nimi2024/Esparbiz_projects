@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+form {
+    /* border: 1px solid blue; */
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+
+table {
+    /* border: 1px solid black;  */
+    width: 100%;
+    /* background-color: rgb(224, 224, 255);
+            color: rgb(112, 110, 110); */
+
+} 
+
+input[type=submit] {
+    /* border: 1px solid green; */
+    margin: auto;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    /* background-color: rgb(255, 167, 51);
+            color: white; */
+    font-size: larger;
+}
+
+
+
+
+
+.input {
+
+    outline: none;
+    border:1px solid  purple;
+    border-radius: 5px;
+    height: 40px;
+    width: 200px;
+}
+
+.work_exp {
+    padding: 10%;
+    padding-bottom: 5%;
+    margin: 10%
+}
+
+.pre {
+    margin-top: 1%;
+    padding: 2%;
+}
+
+form {
+
+    max-width: 1440px;
+    margin: auto;
+}
+
+fieldset {
+    background-color: rgb(169, 162, 209);
+}
+
+.btn-add {
+    height: 20px;
+    width: 30px;
+    background-color: rgb(75, 127, 151);
+}
+
+#nex{
+    height: 50px;
+    font-weight: bolder;
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+}
+#prev{
+    height: 50px;
+    font-weight: bolder;
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+}
+
+#submit{
+    height: 50px;
+    font-weight: bolder;
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+}
+
+/* button{
+   
+    height: 50px;
+    font-weight: bolder;
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+} */
+
+.next_page{
+    /* max-width: 11000px; */
+    display: flex;
+    gap: 1250px;
+    /* justify-content: space-around; */
+
+}
+
+input[type = submit]{
+    display: none;
+}
+section{
+    border: 1px solid purple;
+    outline: none;
+}
+
+legend{
+    font-size: xx-large;
+    color: rgb(74, 53, 93);
+    font-weight: bolder;
+}
+
+.hidden{
+    display: none;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style src="/styles/paginationResult.css"> </style>
+</head>
+
+<body class="body">
+    <div class="header h-[5rem] flex items-center justify-center">Student Name : <%= student_name %></div>
+    <div class="_table w-full flex items-center justify-center">
+        <table class="table-auto inline">
+            <thead class="w-full">
+                <tr class="flex">
+                    <% for(let i=0; i<table_title.length; i++) {%>
+                        <th class="border capitalize text-center py-2 px-5 flex items-center !w-[145px] gap-5">
+                            <%= table_title[i] %>
+                                <!-- <span class="flex flex-col w-fit">
+                                    <span class="cursor-pointer">⬆</span>
+                                    <span class="cursor-pointer">⬇</span>
+                                </span> -->
+                        </th>
+                        <% }; %>
+                       
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<records_for_student_result.length; i++) {%>
+                    <tr>
+                        <% for(let j=0; j<table_keys.length; j++) {%>
+                            <td class="border text-center py-2 px-5  inline-block w-[141.5px]">
+                                <%= records_for_student_result[i][table_keys[j]] %>
+                            </td>
+                            <% }; %>
+                           
+                    </tr>
+                    <% }; %>
+                    
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
