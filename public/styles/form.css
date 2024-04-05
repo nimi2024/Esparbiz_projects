@@ -3,7 +3,6 @@
     padding: 0;
 
 }
-
 form {
     /* border: 1px solid blue; */
     margin-top: 20px;
@@ -12,9 +11,10 @@ form {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    max-width: 1440px;
+    margin: auto;
 
 }
-
 table {
     /* border: 1px solid black;  */
     width: 100%;
@@ -22,7 +22,6 @@ table {
             color: rgb(112, 110, 110); */
 
 } 
-
 input[type=submit] {
     /* border: 1px solid green; */
     margin: auto;
@@ -35,11 +34,6 @@ input[type=submit] {
             color: white; */
     font-size: larger;
 }
-
-
-
-
-
 .input {
 
     outline: none;
@@ -48,7 +42,6 @@ input[type=submit] {
     height: 40px;
     width: 200px;
 }
-
 .work_exp {
     padding: 10%;
     padding-bottom: 5%;
@@ -58,12 +51,6 @@ input[type=submit] {
 .pre {
     margin-top: 1%;
     padding: 2%;
-}
-
-form {
-
-    max-width: 1440px;
-    margin: auto;
 }
 
 fieldset {
@@ -136,4 +123,98 @@ legend{
 
 .hidden{
     display: none;
+}
+table {
+    /* border: 1px solid black; */
+    width: 100%;
+    background-color: rgb(224, 224, 255);
+    color: rgb(112, 110, 110);
+
+}
+
+input[type=submit] {
+    /* border: 1px solid green; */
+    margin: auto;
+    width: 80px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: rgb(255, 167, 51);
+    color: white;
+    font-size: larger;
+    display: none;
+}
+
+p {
+    color: brown;
+}
+
+.tbl>tr {
+    /* border: 1px solid green; */
+    width: 100px;
+}
+
+div {
+    max-width: 1300px;
+    display: flex;
+    flex-direction: row;
+    gap: 1200px;
+}
+
+.form-section {
+    display: none;
+}
+
+.next {
+    height: 50px;
+    font-weight: bolder;
+    width: 200px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+}
+
+.prev {
+    height: 50px;
+    font-weight: bolder;
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+}
+
+.submit {
+    height: 50px;
+    font-weight: bolder;
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(169, 162, 209);
+    border: 1px solid purple;
+}
+
+
+
+label{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 900;
+}
+
+.input {
+
+    outline: none;
+    border: 1px solid purple;
+    border-radius: 5px;
+    height: 40px;
+    width: 200px;
+}
+
+.btns{
+    outline: none;
+    border: 1px solid purple;
+    background-color: rgb(200, 157, 241);
+    border-radius: 5px;
+    height: 40px;
+    width: 100px; 
+    border-radius: 10px;
 }

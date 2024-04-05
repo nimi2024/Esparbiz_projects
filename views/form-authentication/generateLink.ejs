@@ -52,39 +52,7 @@
       </div>
     </section>
   </form>
-
-
-
-  <script>
-    document.getElementById('genlink').addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      const formData = new FormData(this);
-
-      fetch('/generate-activation-link', {
-        method: 'POST',
-        body: formData
-      })
-
-        .then(response => response.json())
-        .then(data => {
-          console.log('activationlink', data)
-          document.getElementById('tokenDisplay').innerHTML = `<a href="${data.userActivationLink}">Activation Link</a>`;
-
-        })
-        .catch(error => console.error('Error:', error));
-    });
-
-    function redirectactivation() {
-
-      window.location.href = `${userActivationLink}`;
-
-    }
-
-
-
-  </script>
-
+<script src="../../javascript/form-authentication/generatelink.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

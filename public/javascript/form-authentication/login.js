@@ -10,9 +10,6 @@ document.getElementById('submit-login').addEventListener('click', async () => {
         console.log(data)
     }
     console.log("data is:", data)
-
-
-
     try {
 
         const response = await fetch('http://localhost:3000/login', {
@@ -47,12 +44,13 @@ document.getElementById('submit-login').addEventListener('click', async () => {
 
 );
 
-
 loginForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const email = document.getElementById('lemail').value
     const password = document.getElementById('lpassword').value
+    console.log("email and password",email,password);
+
     const emailpattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (email == '') {
@@ -73,8 +71,6 @@ loginForm.addEventListener('submit', function (event) {
         return;
     }
 
-
-
     function displayError(message) {
         const errorMessage = document.getElementById('errorMessage');
         errorMessage.style.color = "red";
@@ -85,13 +81,12 @@ loginForm.addEventListener('submit', function (event) {
         const errorMessage = document.getElementById('errorMessage');
         errorMessage.style.color = 'green';
         errorMessage.textContent = message;
-
+        // window.location.pathname='/index'
     }
     displaysucess('Login sucessfully!.');
 
 });
 
-document.getElementById('submit-login').addEventListener('click',()=> {
-    console.log("hello it's me");
-    window.location.pathname='/index'
-})
+document.getElementById('submit-login').addEventListener('click',  () => {
+     window.location.pathname='/index'
+});

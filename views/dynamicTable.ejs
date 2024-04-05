@@ -21,15 +21,16 @@
     </form>
     <div class="col2">
         <div>
-        <button value="-" id="coladd" class="btn" onclick="ColAdd()"> +</button>
+        <button value="-" id="coladd" class="btn" onclick="addcol()" > +</button>
     </div>
     <div>
-        <button class="btn" id="colsub" value="-"  onclick="ColSub()"> -</button>
+        <button class="btn" id="colsub" value="-"  onclick="subcol()"> -</button>
     </div>
     <div style="margin: auto;"></div>
 
-    <table border="1" id="dtab" ">
-        <tr id="row">
+    <table border="1" id="dtab" >
+        <tbody id="modify">
+        <tr id="demo">
             <td class="dark"> </td>
             <td class="light"> </td>
             <td class="dark"> </td>
@@ -44,18 +45,19 @@
             <td class="light"> </td>
             <td class="dark"> </td>
         </tr>
+        </tbody>
     </table>
     <br>
     <div class="col1">
         <div>
-        <button class="btn" type="button" id="rowadd" value="+" onclick="rowADD()">+</button>
+        <button class="btn" type="button" id="rowadd" value="+" onclick="addrow()">+</button>
     </div>&nbsp;&nbsp;
     <div>
-        <button class="btn" value="-" id="rowsub"  onclick="document.getElementById('dtab').deleteRow(1)"> -</button>
+        <button class="btn" value="-" id="rowsub"  onclick="subrow()"> -</button>
     </div>
 
 </section>
 </body>
-<script src="javascript/dynamictbl.js"></script>
+<script src="/javascript/dynamictbl.js"></script>
 
 </html>

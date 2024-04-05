@@ -1,12 +1,9 @@
-const express = require('express');
-const route = express.Router();
 const db = require('../../config/mysql2');
 const mysql = require('mysql2/promise');
 const md5 = require('md5');
 // const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
-
 
 const secretKey = 'mysecret';
 
@@ -19,29 +16,36 @@ const pool = mysql.createPool({
     connectionLimit: 10, // The limit based on needs
     queueLimit: 0
 })
+const common_sql = ``
 
-
-route.get('/', (req, res) => {
+const formIndexGet = (req, res) => {
     res.render('form-authentication/index.ejs');
-})
-route.post('/', (req, res) => {
+}
+
+const formIndexPost = async (req, res) => {
     let ele = req.body;
     const salt = "mysecret"
     console.log(ele);
     let sql1 = `insert into users(username,address,dob,pincode,course,email,gender,salt) values(?,?,?,?,?,?,?,?)`;
-    const result = db.query(sql1, [ele.username, ele.address, ele.dob, ele.pincode, ele.course, ele.email, ele.gender, (salt)]);
-    console.log(result);
-})
+    const result = await db.query(sql1, [ele.username, ele.address, ele.dob, ele.pincode, ele.course, ele.email, ele.gender, (salt)]);
+    console.log('result', result)
+    let sql2 = 'select * from users;'
+    const result2 = await db.query(sql2);
+    console.log('sql2', sql2);
+    console.log('result2', result2)
+    console.log(result[0].insertId);
 
-route.get('/generate-activation-link', (req, res) => {
+    res.send({ lastid: result[0].insertId })
+}
+
+const activationLinkGet = (req, res) => {
 
     res.render('form-authentication/generateLink')
-})
-
-route.get('/showResponse',(req,res) => {
-    res.send("Your password created successfully!.....")  
-});
-route.post('/generate-activation-link', (req, res) => {
+}
+const showResponse = (req, res) => {
+    res.send("Your password created successfully!.....")
+}
+const activationLinkPost = (req, res) => {
     function generateActivationLink() {
         const baseUrl = `http://localhost:3000/generate-activation-link`;
         const activateCode = generateActivationCode(8);
@@ -97,186 +101,117 @@ route.post('/generate-activation-link', (req, res) => {
 
     // console.log('generate hogaya')
     res.send({ userActivationLink, activationLink })
-})
-
-
-route.get('/create-password', (req, res) => {
+}
+const createPswdGet = (req, res) => {
     // console.log(req.params.token_url);
     res.render('form-authentication/createpswd');
-})
-
-route.post('/create-password', async (req, res) => {
+}
+const createPswdPost = async (req, res) => {
     let password = req.body.password;
     let repeatPassword = req.body.repeatpassword;
-    console.log("password is:", password)
-    console.log("Repeat-password is:", password)
-
-    async function fetchLastIdAndUpdate() {
-        try {
-            const connection = await pool.getConnection();
-            const [rows] = await connection.query('select id from users order by id desc limit 1;')
-            connection.release();
-
-            if (rows.length > 0) {
-                const lastId = rows[0].id;
-                const salt = 'mysecret';
-                const pswd = md5(password) + salt
-                const updateQuery = `update users set password = '${pswd}' where id = ${lastId};`
-                const [updateResult] = await pool.query(updateQuery);
-                console.log(updateResult)
-                console.log("Data updated sucessfully");
-            } else {
-                console.log("No record found in the table");
-            }
-
-        }
-        catch (error) {
-            console.log("Error:", error)
-        }
-    }
-    fetchLastIdAndUpdate()
-
-
-
+    const result = await db.query('select * from database_operation.users')
+    if (result[0].error) throw new Error(result[0].error.message);
+    const lastId = result[0].length;
+    console.log('lastId is', lastId)
+    const salt = 'mysecret';
+    console.log('salt', salt)
+    const pswd = md5(password) + salt
+    console.log("passsword is", pswd)
+    const updateQuery = `update users set password = ? where id = ?`
+    const update = await db.query(updateQuery, [pswd, lastId]);
+    if (update[0].error) throw new Error(result[0].error.message);
+    console.log("Data updated sucessfully");
     res.send('form-authentication/createpswd')
+}
 
-})
-
-route.get('/login', (req, res) => {
+const loginGet = (req, res) => {
     res.render('form-authentication/login')
-})
-
-route.post('/login', async (req, res) => {
-    var salt='mysecret';
+}
+const loginPost = async (req, res) => {
+    var salt = 'mysecret';
     let email = req.body.email;
-    console.log(email, "email");
+    console.log(email, "email is");
     let password = req.body.password;
-    console.log(password, "password");
-
-
-
-    async function loginvalidation() {
-        const connection = await pool.getConnection();
-        connection.release();
-        try {
-            const [data] = await connection.query(`select * from users where email='${email}';`)
-            // let salt = data[0].salt
-            console.log('email is:',email);
-            console.log(data, "data")
+    console.log(password, "password is");
+    const sql1 = `select * from users where email = ?`
+    const record = await db.query(sql1, [email]);
+            console.log('record',record[0]);
+            console.log('email is:', email);
             console.log(salt, "salt")
             password = md5(password) + salt
             console.log("paword of login page", password)
-            let user_data = data[0];
-            console.log("use5r data", user_data);
-            console.log((user_data.email === req.body.email), (user_data.password === req.body.password))
-            console.log(user_data.email.length, req.body.email.length)
-            console.log(user_data.password, password)
-
-
-            if ((user_data.email === req.body.email) && (user_data.password === req.body.password)) {
-                console.log('if');
-
+            let user_data = record[0];
+            if ((user_data[0].email === email) && (user_data[0].password === password)) {
                 console.log('Login Successfully.......');
+                res.send({userdata: user_data[0]})
 
             } else {
-                console.log('else');
                 console.error('Please Enter Valid Email And Password');
 
             }
-
-
-        } catch (error) {
-            console.log("Error Message:", error);
-        }
-    }
-
-    loginvalidation();
 }
-);
 
-route.get('/forgot-password', (req, res) => {
+const forgetPswdGet = (req, res) => {
     // console.log(req.params.token_url);
     res.render('form-authentication/forgotpassword')
-})
-
-route.post('/forgot-password', (req, res) => {
+}
+const forgetPswdPost = (req, res) => {
 
     const email = req.body.email
     console.log("email is", email)
     const password = req.body.password
-    console.log("password",password)
+    console.log("password", password)
 
-if(!email){
-    return res.status(400).json({error:'Email is require'});
+    if (!email) {
+        return res.status(400).json({ error: 'Email is require' });
+    }
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'nimimishra2024@gmail.com',
+            //   pass: 'gynk zors kiwj zbgl '
+        }
+    });
+    var mailOptions = {
+        from: 'nimi2024@gmail.com',
+        to: `${email}`,
+        subject: 'Reset Password Of Your Email..',
+        text: 'Click Here To Reset Your Password : http://localhost:3000/updatepswd'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
 }
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'nimimishra2024@gmail.com',
-    //   pass: 'gynk zors kiwj zbgl '
-    }
-  });
-  
-  var mailOptions = {
-    from: 'nimi2024@gmail.com',
-    to: `${email}`,
-    subject: 'Reset Password Of Your Email..',
-    text: 'Click Here To Reset Your Password : http://localhost:3000/updatepswd'
-  };
-  
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-  
-})
-
-route.get('/updatepswd',(res,req) => {
+const updatePswdGet = (res, req) => {
     req.render('form-authentication/pswdReset');
-})
-route.post('/updatepswd', async(req, res) => {
-   
+}
+const updatePswdPost = async (req, res) => {
+
     let data = req.body;
-    console.log(data,"fromjs")
+    console.log(data, "fromjs")
     let newpswd = req.body.newpassword;
     let repeatpswd = req.body.repeatpassword;
     let email = req.body.email
-    console.log(newpswd,repeatpswd,email);
+    console.log(newpswd, repeatpswd, email);
 
-    newpswd = md5(newpswd)+secretKey;
+    newpswd = md5(newpswd) + secretKey;
     console.log(newpswd)
     const connection = await pool.getConnection();
     connection.release();
     const sql = `UPDATE users SET password='${newpswd}' where email='${email}'`
     const resultQuery = await connection.query(sql);
     console.log(resultQuery);
-    
-   
-})
-
-
-
-// Middleware to authenticate token
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split('');
-    if (token == null) return res.sendStatus(401);
-
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-    });
-};
-
-// LOGINN ENDPOINT
-route.get('/jwt_login', (req, res) => {
+}
+const loginGetJwt = (req, res) => {
     res.render('form-authentication/jwt_login')
-})
-
-route.post('/jwt_login', async (req, res) => {
+}
+const loginPostJwt = async (req, res) => {
     const connection = await pool.getConnection();
     connection.release();
     const salt = 'mysecret';
@@ -300,30 +235,24 @@ route.post('/jwt_login', async (req, res) => {
         console.log('user data', data);
 
         //check password...
-       function generateToken(data){
-        console.log("generateToken")
-        const token = jwt.sign(data,salt,{expiresIn : '1h'})
-        console.log("generateToken", token)
-        return token;
-       }
+        function generateToken(data) {
+            console.log("generateToken")
+            const token = jwt.sign(data, salt, { expiresIn: '1h' })
+            console.log("generateToken", token)
+            return token;
+        }
 
-       //generate tokens for the sample user...
-       const token = generateToken(data);
-       console.log('generated Token:' ,token);
+        //generate tokens for the sample user...
+        const token = generateToken(data);
+        console.log('generated Token:', token);
 
     }
     catch (error) {
         return error;
     }
     res.render('form-authentication/jwt_login')
-});
-
-route.get('/user',authenticateToken,(rea,res) => {
-    
-    
-    
-})
-
-
-
-module.exports = route;
+}
+module.exports = {
+    formIndexGet, formIndexPost, activationLinkGet, showResponse, activationLinkPost, createPswdGet, createPswdPost, loginGet, loginPost, forgetPswdGet,
+    forgetPswdPost, updatePswdGet, updatePswdPost, loginGetJwt, loginPostJwt
+}

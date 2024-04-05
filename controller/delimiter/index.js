@@ -1,11 +1,6 @@
-const express = require('express');
-const route = express.Router();
 const db = require('../../config/mysql.js');
 
-
-
-
-route.get("/searching",(req,res,next) =>{
+const searchingGet = (req,res,next) =>{
     const page = req.query.page || 1;
     const limit = 5;
     
@@ -30,9 +25,9 @@ route.get("/searching",(req,res,next) =>{
             console.log(data);
             res.render('/home/chhotanumari-mishra/Documents/NodeJs/delimeter/searching.ejs',{student:data,page:page,limit:limit,obf:obf,ord:ord,str:str});
     })
-});
+}
 
-route.post("/searching",(req,res) =>{
+const searchingPost = (req,res) =>{
     let str = req.body.str;
     console.log(str,'str is:');
 
@@ -119,7 +114,5 @@ route.post("/searching",(req,res) =>{
         data=JSON.parse(JSON.stringify(data));
         res.render('/home/chhotanumari-mishra/Documents/NodeJs/delimeter/searching.ejs',{student:data,page:page,limit:limit,str:str});
     })
-})
-
-
-module.exports = route;
+}
+module.exports = {searchingGet,searchingPost}

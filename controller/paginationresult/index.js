@@ -1,3 +1,4 @@
+const db = require('../../config/mysql');
 const object_to_keys = (obj) => {
     let keys = [];
     for (let i in obj) keys.push(i);
@@ -308,4 +309,60 @@ where
     GROUP BY studentMaster.student_name;`
 } 
 
-module.exports = { object_to_keys, Table_title, query_for_entire_records, sql_query_for_pagination, sql_query_for_getStudentResult,sql_for_get_student_name }
+const paginationresult = (req, res) => {
+    let limit = 11;
+    let offset = parseInt(req.query.p) || 1;
+    let limitString = `LIMIT ${limit * (offset - 1)}, ${limit}`;
+    let sql_query_entire_record = query_for_entire_records;
+    let sql_query = sql_query_for_pagination(limitString);
+    
+    db.query(sql_query, function (err, result) {
+        if (err) {
+            throw err;
+        } else {
+            console.log("db execution");
+            let records = Object.values(JSON.parse(JSON.stringify(result)));
+            let table_keys = object_to_keys(records[0]);
+            let table_title = Table_title(records[0]);
+            db.query(sql_query_entire_record, function (err, result) {
+                if (err) {
+                    throw err;
+                } else {
+                    let n = Object.values(JSON.parse(JSON.stringify(result))).length;
+                    res.render('paginationResult/index.ejs', { table_title, records, table_keys, n, limit });
+                    return;
+                }
+            });
+            return;
+        }
+    });
+}
+
+ const paginationresultstudent = (req, res) => {
+    const student_id = +req.params.student_id;
+    console.log(student_id);
+    let sql_query_studentResult = sql_query_for_getStudentResult(student_id);
+    let sql_query_student_name = sql_for_get_student_name(student_id);
+    db.query(sql_query_studentResult, function (err, result) {
+        if (err) {
+            throw err;
+        } else {
+            let records_for_student_result = Object.values(JSON.parse(JSON.stringify(result)));
+            let table_keys = object_to_keys(records_for_student_result[0]);
+            let table_title = Table_title(records_for_student_result[0]);
+            db.query(sql_query_student_name, function (err, result_1) {
+                if (err) {
+                    throw err;
+                } else {
+                    let student_name = JSON.parse(JSON.stringify(result_1))[0].full_name;
+                    console.log(student_name);
+                    res.render('paginationResult/student.ejs', { student_name, table_title, records_for_student_result, table_keys });
+                    return;
+                }
+            });
+
+        }
+    });
+}
+
+module.exports = { paginationresult,paginationresultstudent}
